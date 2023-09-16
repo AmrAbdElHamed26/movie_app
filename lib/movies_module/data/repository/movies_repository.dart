@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:movie_app/movies_module/data/data_source/movie_remote_data_source.dart';
 import 'package:movie_app/movies_module/domain/entities/movie_data.dart';
+import 'package:movie_app/movies_module/domain/entities/movie_details.dart';
+import 'package:movie_app/movies_module/domain/entities/recommendation.dart';
 import 'package:movie_app/movies_module/domain/repository/base_movie_repository.dart';
 import 'package:movie_app/shared/error/exceptions.dart';
 
@@ -41,6 +43,28 @@ class MoviesRepository extends BaseMovieRepository{
   @override
   Future<Either<Failure, List<MovieData>>> getTopRatedMovies()async {
     final result = await _baseMovieRemoteDataSource.getTopRatedMovies();
+
+    try {
+      return Right(result);
+    }on ServerException catch(failure){
+      return Left(ServerFailure(failure.errorNetworkMessageError.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, MovieDetail>> getMovieDetails(int movieDetailsID)async {
+    final result = await _baseMovieRemoteDataSource.getMovieDetails(movieDetailsID);
+
+    try {
+      return Right(result);
+    }on ServerException catch(failure){
+      return Left(ServerFailure(failure.errorNetworkMessageError.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Recommendation>>> getRecommendation(int movieId) async{
+    final result = await _baseMovieRemoteDataSource.getRecommendation(movieId);
 
     try {
       return Right(result);
