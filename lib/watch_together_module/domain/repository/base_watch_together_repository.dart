@@ -1,7 +1,6 @@
 
 abstract class BaseWatchTogetherRepository{
 
-  Future<void>makeNewInterview();
-  Future<void>joinInterview();
+  Future<void>makeNewInterview(String roomID);
 
 }

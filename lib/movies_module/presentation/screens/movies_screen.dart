@@ -6,9 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/movies_module/presentation/components/now_playing_component.dart';
 import 'package:movie_app/movies_module/presentation/components/popular_movies_component.dart';
+import 'package:movie_app/movies_module/presentation/components/see_more.dart';
 import 'package:movie_app/movies_module/presentation/components/top_rated_movies_component.dart';
 import 'package:movie_app/movies_module/presentation/controller/movies_bloc.dart';
 import 'package:movie_app/movies_module/presentation/controller/movies_events.dart';
+import 'package:movie_app/shared/services/save_data.dart';
 import 'package:movie_app/shared/services/services_locator.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -48,9 +50,9 @@ class MoviesScreen extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        /// TODO : NAVIGATION TO POPULAR SCREEN
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeMore(data: appData.popularData)));
                       },
-                      child: const Padding(
+                      child:  const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Row(
                           children: [
@@ -90,7 +92,7 @@ class MoviesScreen extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        /// TODO : NAVIGATION TO Top Rated Movies Screen
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeMore(data: appData.topRatedData)));
                       },
                       child: const Padding(
                         padding: EdgeInsets.all(8.0),

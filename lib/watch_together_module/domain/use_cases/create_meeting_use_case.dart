@@ -5,7 +5,8 @@ class CreateMeetingUseCase{
   BaseWatchTogetherRepository baseWatchTogetherRepository;
   CreateMeetingUseCase(this.baseWatchTogetherRepository);
 
-  Future<void> execute()async {
-    await baseWatchTogetherRepository.makeNewInterview();
+  Future<void> execute(String roomID)async {
+    await baseWatchTogetherRepository.makeNewInterview(roomID);
+
   }
 }

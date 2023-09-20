@@ -5,6 +5,7 @@ import 'package:movie_app/movies_module/domain/entities/movie_data.dart';
 import 'package:movie_app/shared/error/exceptions.dart';
 import 'package:movie_app/shared/network/api_constance.dart';
 import 'package:movie_app/shared/network/error_network_message_model.dart';
+import 'package:movie_app/shared/services/save_data.dart';
 
 import '../models/movie_details_model.dart';
 
@@ -26,10 +27,15 @@ class MovieRemoteDataSource extends BaseMovieRemoteDataSource{
   @override
   Future<List<MovieModel>> getNowPlayingMovies()async{
 
-    final response = await Dio().get(ApiConstance.nowPlayingMoviePath);
+    if(appData.nowPlayingState == true){
+       return appData.nowPlayingData;
+    }
 
+    final response = await Dio().get(ApiConstance.nowPlayingMoviePath);
     if(response.statusCode == 200){
-      return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e)));
+        appData.nowPlayingData =  List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e)));
+        appData.nowPlayingState = true;
+        return appData.nowPlayingData ;
     }
     else{
       throw ServerException(errorNetworkMessageError: ErrorNetworkMessageError.fromJson(response.data));
@@ -38,10 +44,14 @@ class MovieRemoteDataSource extends BaseMovieRemoteDataSource{
 
   @override
   Future<List<MovieModel>> getPopularMovies() async {
+    if(appData.popularState == true){
+      return appData.popularData;
+    }
     final response = await Dio().get(ApiConstance.popularMoviePath);
-
     if(response.statusCode == 200){
-      return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e)));
+      appData.popularData =  List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e)));
+      appData.popularState = true;
+      return appData.popularData ;
     }
     else{
       throw ServerException(errorNetworkMessageError: ErrorNetworkMessageError.fromJson(response.data));
@@ -50,9 +60,14 @@ class MovieRemoteDataSource extends BaseMovieRemoteDataSource{
 
   @override
   Future<List<MovieModel>> getTopRatedMovies() async{
+    if(appData.topRatedState == true){
+      return appData.topRatedData;
+    }
     final response = await Dio().get(ApiConstance.topRatedMoviePath);
     if(response.statusCode == 200){
-      return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e)));
+      appData.topRatedData =  List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e)));
+      appData.topRatedState = true;
+      return appData.topRatedData ;
     }
     else{
       throw ServerException(errorNetworkMessageError: ErrorNetworkMessageError.fromJson(response.data));

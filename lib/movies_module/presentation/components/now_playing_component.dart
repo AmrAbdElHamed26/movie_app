@@ -23,13 +23,13 @@ class NowPlayingComponent extends StatelessWidget {
       switch (state.nowPlayingState) {
         case RequestState.loading:
           return const SizedBox(
-              height: 400, child: Center(child: CircularProgressIndicator()));
+              height: 300, child: Center(child: CircularProgressIndicator()));
         case RequestState.loaded:
           return FadeIn(
             duration: const Duration(milliseconds: 500),
             child: CarouselSlider(
               options: CarouselOptions(
-                height: 400.0,
+                height: 300.0,
                 viewportFraction: 1.0,
                 onPageChanged: (index, reason) {},
               ),
@@ -115,7 +115,7 @@ class NowPlayingComponent extends StatelessWidget {
           );
         case RequestState.error:
           return const SizedBox(
-              height: 400, child: CircularProgressIndicator());
+              height: 300, child: CircularProgressIndicator());
       }
     });
   }

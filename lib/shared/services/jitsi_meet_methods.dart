@@ -2,30 +2,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:jitsi_meet_flutter_sdk/jitsi_meet_flutter_sdk.dart';
 
-import '../utils/constance.dart';
 
 class JitsiMeetMethods {
-  final _jitsiMeetPlugin = JitsiMeet(); // make object from the plugin
+  final _jitsiMeetPlugin = JitsiMeet();
   List<String> participants = [];
 
 
   /// specific room name
   Future<void> createMeeting ({required String roomName}) async {
+    print("informations ${_jitsiMeetPlugin.retrieveParticipantsInfo()}");
     var options = JitsiMeetConferenceOptions(
-      room: roomName,
+      serverURL: "https://meet.jit.si",
+      room: roomName ,
       configOverrides: {
-        "startWithAudioMuted": true,
-        "startWithVideoMuted": true,
-        "subject": "Watch Together"
+        "startWithAudioMuted": false,
+        "startWithVideoMuted": false,
+        "subject" : "Watch Together",
       },
       featureFlags: {
-        "unsaferoomwarning.enabled": false,
-        "ios.screensharing.enabled": true
+        "unsaferoomwarning.enabled": false
       },
       userInfo: JitsiMeetUserInfo(
           displayName: "User",
-          avatar: Constance.imageUrl),
-
+          email: "amr2652001@gmail.com"
+      ),
     );
 
     var listener = JitsiMeetEventListener(
@@ -80,7 +80,7 @@ class JitsiMeetMethods {
       },
     );
 
-    await _jitsiMeetPlugin.join(options, listener);
+    await _jitsiMeetPlugin.join(options);
   }
 
 }

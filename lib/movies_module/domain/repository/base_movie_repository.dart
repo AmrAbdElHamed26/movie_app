@@ -10,7 +10,7 @@ abstract class BaseMovieRepository {
   Future<Either<Failure,List<MovieData>>> getNowPlayingMovies();
   Future<Either<Failure,List<MovieData>>> getPopularMovies();
   Future<Either<Failure,List<MovieData>>> getTopRatedMovies();
-  Future<Either<Failure,MovieDetail>> getMovieDetails(int movieDetailsID);
 
+  Future<Either<Failure,MovieDetail>> getMovieDetails(int movieDetailsID);
   Future<Either<Failure,List<Recommendation>>> getRecommendation(int movieId);
 }
